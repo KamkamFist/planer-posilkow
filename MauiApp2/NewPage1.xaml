@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MauiApp2.NewPage1"
+             Title="Planer Posiłków">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="20" Spacing="15">
+
+            <!-- Nagłówek -->
+            <Label Text="rgferwG"
+                   FontSize="28"
+                   HorizontalOptions="Center"
+                   FontAttributes="Bold" />
+
+            <!-- Historia / Lista Zakupów -->
+            <HorizontalStackLayout HorizontalOptions="Center" Spacing="10">
+                <Button Text="Historia" WidthRequest="140" />
+                <Button Text="Lista Zakupów" WidthRequest="140" />
+            </HorizontalStackLayout>
+
+            <!-- ==== Dni tygodnia ==== -->
+
+            <!-- Generujemy ręcznie każdy dzień -->
+
+            <!-- ===== PONIEDZIAŁEK ===== -->
+            <Frame BorderColor="Gray" CornerRadius="10">
+                <VerticalStackLayout>
+                    <HorizontalStackLayout >
+                        <Label Text="PONIEDZIAŁEK" FontSize="18" FontAttributes="Bold"/>
+                        <Button Text="WSTAW" Clicked="OnMondayInsertClicked"/>
+                    </HorizontalStackLayout>
+
+                    <HorizontalStackLayout>
+                        <VerticalStackLayout>
+                            <Entry x:Name="MondayBreakfastEntry" Placeholder="Śniadanie" />
+                            <Label x:Name="MondayBreakfastLabel" Text="" TextColor="Gray"/>
+                        </VerticalStackLayout>
+                        <VerticalStackLayout>
+                            <Entry x:Name="MondayLunchEntry" Placeholder="Obiad" />
+                            <Label x:Name="MondayLunchLabel" Text="" TextColor="Gray"/>
+                        </VerticalStackLayout>
+                        <VerticalStackLayout>
+                            <Entry x:Name="MondayDinnerEntry" Placeholder="Kolacja" />
+                            <Label x:Name="MondayDinnerLabel" Text="" TextColor="Gray"/>
+                        </VerticalStackLayout>
+                    </HorizontalStackLayout>
+                </VerticalStackLayout>
+            </Frame>
+
+            <!-- ===== WTOREK ===== -->
+            <Frame BorderColor="Gray" CornerRadius="10">
+                <VerticalStackLayout>
+                    <HorizontalStackLayout>
+                        <Label Text="WTOREK" FontSize="18" FontAttributes="Bold"/>
+                        <Button Text="WSTAW" Clicked="OnTuesdayInsertClicked"/>
+                    </HorizontalStackLayout>
+
+                    <HorizontalStackLayout>
+                        <VerticalStackLayout>
+                            <Entry x:Name="TuesdayBreakfastEntry" Placeholder="Śniadanie" />
+                            <Label x:Name="TuesdayBreakfastLabel" Text="" TextColor="Gray"/>
+                        </VerticalStackLayout>
+                        <VerticalStackLayout>
+                            <Entry x:Name="TuesdayLunchEntry" Placeholder="Obiad" />
+                            <Label x:Name="TuesdayLunchLabel" Text="" TextColor="Gray"/>
+                        </VerticalStackLayout>
+                        <VerticalStackLayout>
+                            <Entry x:Name="TuesdayDinnerEntry" Placeholder="Kolacja" />
+                            <Label x:Name="TuesdayDinnerLabel" Text="" TextColor="Gray"/>
+                        </VerticalStackLayout>
+                    </HorizontalStackLayout>
+                </VerticalStackLayout>
+            </Frame>
+
+            <!-- ===== ŚRODA ===== -->
+            <Frame BorderColor="Gray" CornerRadius="10">
+                <VerticalStackLayout>
+                    <HorizontalStackLayout>
+                        <Label Text="ŚRODA" FontSize="18" FontAttributes="Bold"/>
+                        <Button Text="WSTAW" Clicked="OnWednesdayInsertClicked"/>
+                    </HorizontalStackLayout>
+
+                    <HorizontalStackLayout>
+                        <VerticalStackLayout>
+                            <Entry x:Name="WednesdayBreakfastEntry" Placeholder="Śniadanie" />
+                            <Label x:Name="WednesdayBreakfastLabel" Text="" TextColor="Gray"/>
+                        </VerticalStackLayout>
+                        <VerticalStackLayout>
+                            <Entry x:Name="WednesdayLunchEntry" Placeholder="Obiad" />
+                            <Label x:Name="WednesdayLunchLabel" Text="" TextColor="Gray"/>
+                        </VerticalStackLayout>
+                        <VerticalStackLayout>
+                            <Entry x:Name="WednesdayDinnerEntry" Placeholder="Kolacja" />
+                            <Label x:Name="WednesdayDinnerLabel" Text="" TextColor="Gray"/>
+                        </VerticalStackLayout>
+                    </HorizontalStackLayout>
+                </VerticalStackLayout>
+            </Frame>
+
+            <!-- ===== CZWARTEK ===== -->
+            <Frame BorderColor="Gray" CornerRadius="10">
+                <VerticalStackLayout>
+                    <HorizontalStackLayout >
+                        <Label Text="CZWARTEK" FontSize="18" FontAttributes="Bold"/>
+                        <Button Text="WSTAW" Clicked="OnThursdayInsertClicked"/>
+                    </HorizontalStackLayout>
+
+                    <HorizontalStackLayout>
+                        <VerticalStackLayout>
+                            <Entry x:Name="ThursdayBreakfastEntry" Placeholder="Śniadanie" />
+                            <Label x:Name="ThursdayBreakfastLabel" Text="" TextColor="Gray"/>
+                        </VerticalStackLayout>
+                        <VerticalStackLayout>
+                            <Entry x:Name="ThursdayLunchEntry" Placeholder="Obiad" />
+                            <Label x:Name="ThursdayLunchLabel" Text="" TextColor="Gray"/>
+                        </VerticalStackLayout>
+                        <VerticalStackLayout>
+                            <Entry x:Name="ThursdayDinnerEntry" Placeholder="Kolacja" />
+                            <Label x:Name="ThursdayDinnerLabel" Text="" TextColor="Gray"/>
+                        </VerticalStackLayout>
+                    </HorizontalStackLayout>
+                </VerticalStackLayout>
+            </Frame>
+
+            <!-- ===== PIĄTEK ===== -->
+            <Frame BorderColor="Gray" CornerRadius="10">
+                <VerticalStackLayout>
+                    <HorizontalStackLayout>
+                        <Label Text="PIĄTEK" FontSize="18" FontAttributes="Bold"/>
+                        <Button Text="WSTAW" Clicked="OnFridayInsertClicked"/>
+                    </HorizontalStackLayout>
+
+                    <HorizontalStackLayout>
+                        <VerticalStackLayout>
+                            <Entry x:Name="FridayBreakfastEntry" Placeholder="Śniadanie" />
+                            <Label x:Name="FridayBreakfastLabel" Text="" TextColor="Gray"/>
+                        </VerticalStackLayout>
+                        <VerticalStackLayout>
+                            <Entry x:Name="FridayLunchEntry" Placeholder="Obiad" />
+                            <Label x:Name="FridayLunchLabel" Text="" TextColor="Gray"/>
+                        </VerticalStackLayout>
+                        <VerticalStackLayout>
+                            <Entry x:Name="FridayDinnerEntry" Placeholder="Kolacja" />
+                            <Label x:Name="FridayDinnerLabel" Text="" TextColor="Gray"/>
+                        </VerticalStackLayout>
+                    </HorizontalStackLayout>
+                </VerticalStackLayout>
+            </Frame>
+
+            <!-- ===== SOBOTA ===== -->
+            <Frame BorderColor="Gray" CornerRadius="10">
+                <VerticalStackLayout>
+                    <HorizontalStackLayout >
+                        <Label Text="SOBOTA" FontSize="18" FontAttributes="Bold"/>
+                        <Button Text="WSTAW" Clicked="OnSaturdayInsertClicked"/>
+                    </HorizontalStackLayout>
+
+                    <HorizontalStackLayout>
+                        <VerticalStackLayout>
+                            <Entry x:Name="SaturdayBreakfastEntry" Placeholder="Śniadanie" />
+                            <Label x:Name="SaturdayBreakfastLabel" Text="" TextColor="Gray"/>
+                        </VerticalStackLayout>
+                        <VerticalStackLayout>
+                            <Entry x:Name="SaturdayLunchEntry" Placeholder="Obiad" />
+                            <Label x:Name="SaturdayLunchLabel" Text="" TextColor="Gray"/>
+                        </VerticalStackLayout>
+                        <VerticalStackLayout>
+                            <Entry x:Name="SaturdayDinnerEntry" Placeholder="Kolacja" />
+                            <Label x:Name="SaturdayDinnerLabel" Text="" TextColor="Gray"/>
+                        </VerticalStackLayout>
+                    </HorizontalStackLayout>
+                </VerticalStackLayout>
+            </Frame>
+
+            <!-- ===== NIEDZIELA ===== -->
+            <Frame BorderColor="Gray" CornerRadius="10">
+                <VerticalStackLayout>
+                    <HorizontalStackLayout >
+                        <Label Text="NIEDZIELA" FontSize="18" FontAttributes="Bold"/>
+                        <Button Text="WSTAW" Clicked="OnSundayInsertClicked"/>
+                    </HorizontalStackLayout>
+
+                    <HorizontalStackLayout>
+                        <VerticalStackLayout>
+                            <Entry x:Name="SundayBreakfastEntry" Placeholder="Śniadanie" />
+                            <Label x:Name="SundayBreakfastLabel" Text="" TextColor="Gray"/>
+                        </VerticalStackLayout>
+                        <VerticalStackLayout>
+                            <Entry x:Name="SundayLunchEntry" Placeholder="Obiad" />
+                            <Label x:Name="SundayLunchLabel" Text="" TextColor="Gray"/>
+                        </VerticalStackLayout>
+                        <VerticalStackLayout>
+                            <Entry x:Name="SundayDinnerEntry" Placeholder="Kolacja" />
+                            <Label x:Name="SundayDinnerLabel" Text="" TextColor="Gray"/>
+                        </VerticalStackLayout>
+                    </HorizontalStackLayout>
+                </VerticalStackLayout>
+            </Frame>
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>
