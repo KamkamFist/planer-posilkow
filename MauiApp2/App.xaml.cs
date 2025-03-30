@@ -5,11 +5,9 @@
         public App()
         {
             InitializeComponent();
-        }
 
-        protected override Window CreateWindow(IActivationState? activationState)
-        {
-            return new Window(new NewPage1());
+            // Upewnij się, że ustawiasz główną stronę jako NavigationPage
+            MainPage = new NavigationPage(new NewPage1());
         }
     }
 }

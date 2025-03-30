@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MauiApp2.AddMealPage"
+             Title="Dodaj Posiłek">
+
+    <StackLayout Padding="20" Spacing="15">
+        <Label Text="Dodaj nowy posiłek" FontSize="24" HorizontalOptions="Center" />
+
+        <Label Text="Typ posiłku:" FontAttributes="Bold" />
+        <Picker x:Name="MealTypePicker">
+            <Picker.ItemsSource>
+                <x:Array Type="{x:Type x:String}">
+                    <x:String>Śniadanie</x:String>
+                    <x:String>Obiad</x:String>
+                    <x:String>Kolacja</x:String>
+                </x:Array>
+            </Picker.ItemsSource>
+        </Picker>
+
+        <Label Text="Składniki:" FontAttributes="Bold" />
+        <Editor x:Name="MealIngredientsEntry"
+                Placeholder="Wpisz składniki potrzebne do przygotowania posiłku"
+                AutoSize="TextChanges"
+                HeightRequest="100" />
+
+        <Button Text="Zapisz" Clicked="OnSaveMealClicked" />
+    </StackLayout>
+</ContentPage>

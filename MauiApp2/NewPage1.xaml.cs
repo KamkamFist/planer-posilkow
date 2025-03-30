@@ -1,58 +1,81 @@
-namespace MauiApp2;
+using System;
+using Microsoft.Maui.Controls;
 
-public partial class NewPage1 : ContentPage
+namespace MauiApp2
 {
-    public NewPage1()
+    public partial class NewPage1 : ContentPage
     {
-        InitializeComponent();
-    }
+        public NewPage1()
+        {
+            InitializeComponent();
+        }
 
-    private void OnMondayInsertClicked(object sender, EventArgs e)
-    {
-        MondayBreakfastLabel.Text = MondayBreakfastEntry.Text;
-        MondayLunchLabel.Text = MondayLunchEntry.Text;
-        MondayDinnerLabel.Text = MondayDinnerEntry.Text;
-    }
+        private async Task OpenAddMealPage(string day, Action<string, string> updateAction)
+        {
+            var page = new AddMealPage(day);
+            page.MealAdded += (mealType, ingredients) =>
+            {
+                updateAction(mealType, ingredients);
+            };
+            await Navigation.PushAsync(page);
+        }
 
-    private void OnTuesdayInsertClicked(object sender, EventArgs e)
-    {
-        TuesdayBreakfastLabel.Text = TuesdayBreakfastEntry.Text;
-        TuesdayLunchLabel.Text = TuesdayLunchEntry.Text;
-        TuesdayDinnerLabel.Text = TuesdayDinnerEntry.Text;
-    }
+        private async void OnMondayAddClicked(object sender, EventArgs e) =>
+            await OpenAddMealPage("PONIEDZIA£EK", (type, ing) =>
+            {
+                UpdateMealLabel(type, ing, MondayBreakfastLabel, MondayLunchLabel, MondayDinnerLabel);
+            });
 
-    private void OnWednesdayInsertClicked(object sender, EventArgs e)
-    {
-        WednesdayBreakfastLabel.Text = WednesdayBreakfastEntry.Text;
-        WednesdayLunchLabel.Text = WednesdayLunchEntry.Text;
-        WednesdayDinnerLabel.Text = WednesdayDinnerEntry.Text;
-    }
+        private async void OnTuesdayAddClicked(object sender, EventArgs e) =>
+            await OpenAddMealPage("WTOREK", (type, ing) =>
+            {
+                UpdateMealLabel(type, ing, TuesdayBreakfastLabel, TuesdayLunchLabel, TuesdayDinnerLabel);
+            });
 
-    private void OnThursdayInsertClicked(object sender, EventArgs e)
-    {
-        ThursdayBreakfastLabel.Text = ThursdayBreakfastEntry.Text;
-        ThursdayLunchLabel.Text = ThursdayLunchEntry.Text;
-        ThursdayDinnerLabel.Text = ThursdayDinnerEntry.Text;
-    }
+        private async void OnWednesdayAddClicked(object sender, EventArgs e) =>
+            await OpenAddMealPage("ŒRODA", (type, ing) =>
+            {
+                UpdateMealLabel(type, ing, WednesdayBreakfastLabel, WednesdayLunchLabel, WednesdayDinnerLabel);
+            });
 
-    private void OnFridayInsertClicked(object sender, EventArgs e)
-    {
-        FridayBreakfastLabel.Text = FridayBreakfastEntry.Text;
-        FridayLunchLabel.Text = FridayLunchEntry.Text;
-        FridayDinnerLabel.Text = FridayDinnerEntry.Text;
-    }
+        private async void OnThursdayAddClicked(object sender, EventArgs e) =>
+            await OpenAddMealPage("CZWARTEK", (type, ing) =>
+            {
+                UpdateMealLabel(type, ing, ThursdayBreakfastLabel, ThursdayLunchLabel, ThursdayDinnerLabel);
+            });
 
-    private void OnSaturdayInsertClicked(object sender, EventArgs e)
-    {
-        SaturdayBreakfastLabel.Text = SaturdayBreakfastEntry.Text;
-        SaturdayLunchLabel.Text = SaturdayLunchEntry.Text;
-        SaturdayDinnerLabel.Text = SaturdayDinnerEntry.Text;
-    }
+        private async void OnFridayAddClicked(object sender, EventArgs e) =>
+            await OpenAddMealPage("PI¥TEK", (type, ing) =>
+            {
+                UpdateMealLabel(type, ing, FridayBreakfastLabel, FridayLunchLabel, FridayDinnerLabel);
+            });
 
-    private void OnSundayInsertClicked(object sender, EventArgs e)
-    {
-        SundayBreakfastLabel.Text = SundayBreakfastEntry.Text;
-        SundayLunchLabel.Text = SundayLunchEntry.Text;
-        SundayDinnerLabel.Text = SundayDinnerEntry.Text;
+        private async void OnSaturdayAddClicked(object sender, EventArgs e) =>
+            await OpenAddMealPage("SOBOTA", (type, ing) =>
+            {
+                UpdateMealLabel(type, ing, SaturdayBreakfastLabel, SaturdayLunchLabel, SaturdayDinnerLabel);
+            });
+
+        private async void OnSundayAddClicked(object sender, EventArgs e) =>
+            await OpenAddMealPage("NIEDZIELA", (type, ing) =>
+            {
+                UpdateMealLabel(type, ing, SundayBreakfastLabel, SundayLunchLabel, SundayDinnerLabel);
+            });
+
+        private void UpdateMealLabel(string type, string ingredients, Label breakfast, Label lunch, Label dinner)
+        {
+            switch (type)
+            {
+                case "Œniadanie":
+                    breakfast.Text = $"Œniadanie: {ingredients}";
+                    break;
+                case "Obiad":
+                    lunch.Text = $"Obiad: {ingredients}";
+                    break;
+                case "Kolacja":
+                    dinner.Text = $"Kolacja: {ingredients}";
+                    break;
+            }
+        }
     }
 }
