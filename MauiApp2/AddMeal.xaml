@@ -18,9 +18,12 @@
             </Picker.ItemsSource>
         </Picker>
 
+        <Label Text="Nazwa dania:" FontAttributes="Bold" />
+        <Entry x:Name="MealNameEntry" Placeholder="Wpisz nazwę dania" />
+
         <Label Text="Składniki:" FontAttributes="Bold" />
         <Editor x:Name="MealIngredientsEntry"
-                Placeholder="Wpisz składniki potrzebne do przygotowania posiłku"
+                Placeholder="Wpisz składniki dania"
                 AutoSize="TextChanges"
                 HeightRequest="100" />
 

@@ -13,7 +13,7 @@
                    FontAttributes="Bold" />
 
             <HorizontalStackLayout HorizontalOptions="Center" Spacing="10">
-                <Button Text="Historia" WidthRequest="140" />
+                <Button Text="Historia" WidthRequest="140" Clicked="OnHistoryButtonClicked" />
                 <Button Text="Lista Zakupów" WidthRequest="140" />
             </HorizontalStackLayout>
 
