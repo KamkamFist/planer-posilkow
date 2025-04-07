@@ -14,22 +14,7 @@ namespace MauiApp2
         }
         private void AddMealToDay(string day)
         {
-            var (breakfast, lunch, dinner) = GetLabelsForDay(day);
-
-            if (_mealToAdd != null)
-            {
-                switch (_mealToAdd.MealType)
-                {
-                    case "Œniadanie":
-                        breakfast.Text = $"{_mealToAdd.MealType}: {_mealToAdd.Name}";
-                        break;
-                    case "Obiad":
-                        lunch.Text = $"{_mealToAdd.MealType}: {_mealToAdd.Name}";
-                        break;
-                    case "Kolacja":
-                        dinner.Text = $"{_mealToAdd.MealType}: {_mealToAdd.Name}";
-                        break;
-                }
+           
             }
 
         private async void OnHistoryButtonClicked(object sender, EventArgs e)

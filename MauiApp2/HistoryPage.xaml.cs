@@ -31,16 +31,5 @@ namespace MauiApp2
             var meals = LoadMealsFromFile();
             MealsListView.ItemsSource = meals;
         }
-
-        // Obs³uguje klikniêcie przycisku "Dodaj do dnia"
-        private async void OnAddToDayClicked(object sender, EventArgs e)
-        {
-            if (sender is Button button && button.CommandParameter is Meal selectedMeal)
-            {
-                var page = new NewPage1();
-                await Navigation.PushAsync(page);
-                page.AddMealToDay(selectedMeal);
-            }
-        }
     }
 }

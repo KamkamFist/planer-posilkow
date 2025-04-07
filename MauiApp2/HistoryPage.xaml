@@ -10,13 +10,7 @@
         <ListView x:Name="MealsListView">
             <ListView.ItemTemplate>
                 <DataTemplate>
-                    <ViewCell>
-                        <StackLayout Orientation="Horizontal" Padding="10">
-                            <Label Text="{Binding MealType}" FontSize="18" VerticalOptions="Center" />
-                            <Label Text="{Binding Name}" FontSize="16" HorizontalOptions="FillAndExpand" VerticalOptions="Center" />
-                            <Button Text="Dodaj do dnia" Clicked="OnAddToDayClicked" CommandParameter="{Binding}" />
-                        </StackLayout>
-                    </ViewCell>
+                    <TextCell Text="{Binding MealType}" Detail="{Binding Name}" />
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
