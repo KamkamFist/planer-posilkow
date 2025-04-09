@@ -11,16 +11,24 @@ namespace MauiApp2
         public NewPage1()
         {
             InitializeComponent();
+            // Subskrypcja komunikatu z HistoryPage
+            MessagingCenter.Subscribe<HistoryPage, (Meal meal, string day)>(this, "MealReAdd", (sender, tuple) =>
+            {
+                var (meal, day) = tuple;
+                AddMealFromHistory(meal, day); // Dodajemy posi³ek do odpowiedniego dnia
+            });
         }
+
         private void AddMealToDay(string day)
         {
-           
-            }
+            // Metoda ta jest niepotrzebna w tej wersji kodu, ale mo¿e byæ u¿ywana w innych miejscach.
+        }
 
         private async void OnHistoryButtonClicked(object sender, EventArgs e)
         {
             await Navigation.PushAsync(new HistoryPage());
         }
+
         private async Task OpenAddMealPage(string day, Action<string, string> updateAction)
         {
             var page = new AddMealPage(day);
@@ -124,5 +132,40 @@ namespace MauiApp2
                 }
             }
         }
+
+        // Metoda do dodania posi³ku z historii do odpowiedniego dnia
+        private void AddMealFromHistory(Meal meal, string day)
+        {
+            switch (day)
+            {
+                case "PONIEDZIA£EK":
+                    UpdateMealLabel(meal.MealType, meal.Name, MondayBreakfastLabel, MondayLunchLabel, MondayDinnerLabel);
+                    break;
+                case "WTOREK":
+                    UpdateMealLabel(meal.MealType, meal.Name, TuesdayBreakfastLabel, TuesdayLunchLabel, TuesdayDinnerLabel);
+                    break;
+                case "ŒRODA":
+                    UpdateMealLabel(meal.MealType, meal.Name, WednesdayBreakfastLabel, WednesdayLunchLabel, WednesdayDinnerLabel);
+                    break;
+                case "CZWARTEK":
+                    UpdateMealLabel(meal.MealType, meal.Name, ThursdayBreakfastLabel, ThursdayLunchLabel, ThursdayDinnerLabel);
+                    break;
+                case "PI¥TEK":
+                    UpdateMealLabel(meal.MealType, meal.Name, FridayBreakfastLabel, FridayLunchLabel, FridayDinnerLabel);
+                    break;
+                case "SOBOTA":
+                    UpdateMealLabel(meal.MealType, meal.Name, SaturdayBreakfastLabel, SaturdayLunchLabel, SaturdayDinnerLabel);
+                    break;
+                case "NIEDZIELA":
+                    UpdateMealLabel(meal.MealType, meal.Name, SundayBreakfastLabel, SundayLunchLabel, SundayDinnerLabel);
+                    break;
+            }
+        }
+        private async void OnShoppingListButtonClicked(object sender, EventArgs e)
+        {
+            // Przechodzimy do strony z list¹ zakupów
+            await Navigation.PushAsync(new ShoppingListPage());
+        }
     }
-}
+    }
+    

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MauiApp2.ShoppingListPage"
+             Title="Lista Zakupów">
+
+    <StackLayout Padding="20" Spacing="15">
+        <Label Text="Lista zakupów" FontSize="24" HorizontalOptions="Center" />
+
+        <ListView x:Name="ShoppingListView" ItemsSource="{Binding ShoppingList}" ItemTapped="OnItemTapped">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell>
+                        <StackLayout>
+                            <CheckBox IsChecked="{Binding IsChecked}" CheckedChanged="OnCheckBoxChanged" />
+                            <Label Text="{Binding Name}" />
+                        </StackLayout>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+
+    </StackLayout>
+</ContentPage>

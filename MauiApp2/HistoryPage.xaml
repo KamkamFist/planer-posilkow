@@ -4,16 +4,15 @@
              x:Class="MauiApp2.HistoryPage"
              Title="Historia Posiłków">
 
-    <StackLayout Padding="20">
-        <Label Text="Historia Dodanych Posiłków" FontSize="24" HorizontalOptions="Center" />
+    <StackLayout Padding="20" Spacing="15">
+        <Label Text="Historia Posiłków" FontSize="24" HorizontalOptions="Center" />
 
-        <ListView x:Name="MealsListView">
+        <ListView x:Name="MealsListView" ItemSelected="OnMealSelected">
             <ListView.ItemTemplate>
                 <DataTemplate>
-                    <TextCell Text="{Binding MealType}" Detail="{Binding Name}" />
+                    <TextCell Text="{Binding Name}" Detail="{Binding MealType}" />
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
-
     </StackLayout>
 </ContentPage>

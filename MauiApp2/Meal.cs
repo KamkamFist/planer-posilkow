@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace MauiApp2
+﻿namespace MauiApp2
 {
     public class Meal
     {
@@ -13,3 +7,4 @@ namespace MauiApp2
         public string Ingredients { get; set; }
     }
 }
+

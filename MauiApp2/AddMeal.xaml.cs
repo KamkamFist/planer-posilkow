@@ -2,6 +2,7 @@ using System;
 using System.IO;
 using System.Text.Json;
 using Microsoft.Maui.Controls;
+using System.Collections.Generic;
 
 namespace MauiApp2
 {
@@ -48,23 +49,18 @@ namespace MauiApp2
 
         private void SaveMealToFile(Meal meal)
         {
-            // Œcie¿ka do pliku w lokalnym katalogu aplikacji
             var filePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "meals.json");
 
-            // Sprawdzamy, czy plik ju¿ istnieje
             var meals = new List<Meal>();
 
             if (File.Exists(filePath))
             {
-                // Jeœli plik istnieje, wczytujemy jego zawartoœæ
                 var json = File.ReadAllText(filePath);
                 meals = JsonSerializer.Deserialize<List<Meal>>(json) ?? new List<Meal>();
             }
 
-            // Dodajemy nowy posi³ek do listy
             meals.Add(meal);
 
-            // Zapisujemy zaktualizowan¹ listê do pliku
             var updatedJson = JsonSerializer.Serialize(meals);
             File.WriteAllText(filePath, updatedJson);
         }
