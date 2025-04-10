@@ -22,50 +22,59 @@ namespace MauiApp2
         // Wczytanie listy zakupów z pliku
         private void LoadShoppingList()
         {
-            var filePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), MealsFileName);
+            var shoppingFilePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "shoppinglist.json");
 
-            if (File.Exists(filePath))
+            if (File.Exists(shoppingFilePath))
             {
-                var json = File.ReadAllText(filePath);
+                // Jeœli istnieje zapisany plik listy zakupów, to go wczytaj
+                var savedJson = File.ReadAllText(shoppingFilePath);
+                ShoppingList = JsonSerializer.Deserialize<List<ShoppingItem>>(savedJson) ?? new List<ShoppingItem>();
+            }
+            else
+            {
+                // Jeœli nie istnieje – generujemy listê z meals.json
+                var mealsFilePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "meals.json");
+
+                if (!File.Exists(mealsFilePath))
+                {
+                    ShoppingList = new List<ShoppingItem>();
+                    return;
+                }
+
+                var json = File.ReadAllText(mealsFilePath);
                 var meals = JsonSerializer.Deserialize<List<Meal>>(json) ?? new List<Meal>();
 
-                // Na podstawie sk³adników z posi³ków tworzymy listê zakupów
-                var shoppingItems = new List<ShoppingItem>();
+                var ingredientsSet = new HashSet<string>();
+
                 foreach (var meal in meals)
                 {
-                    var ingredients = meal.Ingredients.Split(','); // Zak³adamy, ¿e sk³adniki s¹ rozdzielone przecinkiem
-                    foreach (var ingredient in ingredients)
+                    var lines = meal.Ingredients.Split(new[] { '\n', '\r' }, StringSplitOptions.RemoveEmptyEntries);
+
+                    foreach (var line in lines)
                     {
-                        var ingredientTrimmed = ingredient.Trim();
-                        if (!shoppingItems.Any(item => item.Name == ingredientTrimmed))
+                        var trimmed = line.Trim();
+                        if (!string.IsNullOrWhiteSpace(trimmed))
                         {
-                            shoppingItems.Add(new ShoppingItem { Name = ingredientTrimmed, IsChecked = false });
-                        }
-                        else
-                        {
-                            // Dodajemy drugi, trzeci itd. jeœli sk³adnik ju¿ istnieje w liœcie
-                            shoppingItems.Add(new ShoppingItem { Name = ingredientTrimmed, IsChecked = false });
+                            ingredientsSet.Add(trimmed);
                         }
                     }
                 }
 
-                ShoppingList = shoppingItems;
-            }
-            else
-            {
-                ShoppingList = new List<ShoppingItem>();
+                ShoppingList = ingredientsSet.Select(i => new ShoppingItem { Name = i, IsChecked = false }).ToList();
+
+                SaveShoppingList(); // zapisujemy do pliku po wygenerowaniu
             }
 
-            ShoppingListView.ItemsSource = ShoppingList;
+            RefreshShoppingListView();
         }
-
         // Zapisz listê zakupów do pliku
         private void SaveShoppingList()
         {
-            var filePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), ShoppingListFileName);
+            var filePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "shoppinglist.json");
             var json = JsonSerializer.Serialize(ShoppingList);
             File.WriteAllText(filePath, json);
         }
+
 
         // Obs³uguje zmianê stanu checkboxa
         private void OnCheckBoxChanged(object sender, CheckedChangedEventArgs e)
@@ -81,55 +90,98 @@ namespace MauiApp2
         }
 
         // Obs³uguje klikniêcie na element w liœcie
+        // Usuwanie pojedynczego produktu po tapniêciu
         private async void OnItemTapped(object sender, ItemTappedEventArgs e)
         {
-            var selectedItem = e.Item as ShoppingItem;
-            if (selectedItem != null)
+            if (e.Item is ShoppingItem selectedItem)
             {
                 bool delete = await DisplayAlert("Usuñ produkt", $"Czy na pewno chcesz usun¹æ {selectedItem.Name}?", "Tak", "Nie");
                 if (delete)
                 {
                     ShoppingList.Remove(selectedItem);
                     SaveShoppingList(); // Zapisz po usuniêciu
-                    ShoppingListView.ItemsSource = null;
-                    ShoppingListView.ItemsSource = ShoppingList;
+                    RefreshShoppingListView();
                 }
             }
+
+            // Resetujemy zaznaczenie, ¿eby nie zostawa³o "na niebiesko"
+            ((ListView)sender).SelectedItem = null;
         }
 
-        // Obs³uguje klikniêcie przycisku "Usuñ zaznaczone"
+        // Usuwanie zaznaczonych (checkbox) produktów
         private void OnRemoveSelectedButtonClicked(object sender, EventArgs e)
         {
-            var selectedItems = new List<ShoppingItem>();
+            // Kopiujemy zaznaczone elementy do usuniêcia
+            var itemsToRemove = ShoppingList.Where(item => item.IsChecked).ToList();
 
-            // Zbieramy wszystkie zaznaczone elementy
-            foreach (var item in ShoppingList)
+            if (itemsToRemove.Count == 0)
             {
-                if (item.IsChecked)
-                {
-                    selectedItems.Add(item);
-                }
+                DisplayAlert("Brak zaznaczenia", "Zaznacz produkty do usuniêcia.", "OK");
+                return;
             }
 
-            // Usuwamy zaznaczone elementy
-            foreach (var item in selectedItems)
+            foreach (var item in itemsToRemove)
             {
                 ShoppingList.Remove(item);
             }
 
-            // Zapisujemy po usuniêciu
-            SaveShoppingList();
+            SaveShoppingList(); // Zapisz zmiany
+            RefreshShoppingListView(); // Odœwie¿ listê
+        }
 
-            // Odœwie¿amy widok
+        // Pomocnicza metoda do odœwie¿ania widoku listy
+        private void RefreshShoppingListView()
+        {
             ShoppingListView.ItemsSource = null;
             ShoppingListView.ItemsSource = ShoppingList;
         }
-    }
 
-    // Klasa do przechowywania elementów listy zakupów
-    public class ShoppingItem
-    {
-        public string Name { get; set; }
-        public bool IsChecked { get; set; }
+
+        // Klasa do przechowywania elementów listy zakupów
+        public class ShoppingItem
+        {
+            public string Name { get; set; }
+            public bool IsChecked { get; set; }
+        }
+        private void LoadShoppingListFromMeals()
+        {
+            var filePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "meals.json");
+
+            if (!File.Exists(filePath))
+            {
+                return;
+            }
+
+            var json = File.ReadAllText(filePath);
+            var meals = JsonSerializer.Deserialize<List<Meal>>(json) ?? new List<Meal>();
+
+            var ingredientsSet = new HashSet<string>();
+
+            foreach (var meal in meals)
+            {
+                var lines = meal.Ingredients.Split(new[] { '\n', '\r' }, StringSplitOptions.RemoveEmptyEntries);
+
+                foreach (var line in lines)
+                {
+                    var trimmed = line.Trim();
+                    if (!string.IsNullOrWhiteSpace(trimmed))
+                    {
+                        ingredientsSet.Add(trimmed); // dodaje unikalnie
+                    }
+                }
+            }
+
+            ShoppingList = ingredientsSet.Select(i => new ShoppingItem { Name = i, IsChecked = false }).ToList();
+
+            SaveShoppingList(); // Zapisz od razu, jeœli chcesz zachowaæ listê na sta³e
+            RefreshShoppingListView();
+        }
+protected override void OnAppearing()
+        {
+            base.OnAppearing();
+            LoadShoppingList();
+        }
     }
-}
+    
+
+    }

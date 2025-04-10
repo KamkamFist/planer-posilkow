@@ -4,15 +4,33 @@
              x:Class="MauiApp2.HistoryPage"
              Title="Historia Posiłków">
 
-    <StackLayout Padding="20" Spacing="15">
-        <Label Text="Historia Posiłków" FontSize="24" HorizontalOptions="Center" />
+    <StackLayout Padding="10">
+        <Label Text="Historia posiłków" FontSize="24" HorizontalOptions="Center" />
 
-        <ListView x:Name="MealsListView" ItemSelected="OnMealSelected">
-            <ListView.ItemTemplate>
+        <CollectionView x:Name="MealsListView"
+                        SelectionMode="Single"
+                        SelectionChanged="OnMealSelected">
+            <CollectionView.ItemTemplate>
                 <DataTemplate>
-                    <TextCell Text="{Binding Name}" Detail="{Binding MealType}" />
+                    <Frame BorderColor="LightGray" Padding="10" Margin="10" CornerRadius="10">
+                        <Grid ColumnDefinitions="*,Auto">
+                            <StackLayout>
+                                <Label Text="{Binding MealType}" FontAttributes="Bold" />
+                                <Label Text="{Binding Name}" />
+                                <Label Text="{Binding Ingredients}" FontSize="12" TextColor="Gray" />
+                            </StackLayout>
+
+                            <ImageButton Source="heart_outline.png"
+                                         WidthRequest="30"
+                                         HeightRequest="30"
+                                         BackgroundColor="Transparent"
+                                         CommandParameter="{Binding .}"
+                                         Clicked="OnFavoriteClicked"
+                                         Grid.Column="1" />
+                        </Grid>
+                    </Frame>
                 </DataTemplate>
-            </ListView.ItemTemplate>
-        </ListView>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
     </StackLayout>
 </ContentPage>
